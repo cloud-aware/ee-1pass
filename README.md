@@ -3,7 +3,7 @@ AWX Execution Environment with 1password CLI bundled in
 
 Follow these instructions on how to use Ansible-Builder to create a custom AWX EE Image: https://www.ansible.com/blog/introduction-to-ansible-builder
 
-1. Build EE image with command:
+1. Build EE image with command (using the execution-environment.yaml in this repository):
 
 `ansible-builder build --tag ee-1pass --container-runtime docker --verbosity=3  --no-cache`
 
