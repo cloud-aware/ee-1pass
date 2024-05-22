@@ -1,0 +1,18 @@
+---
+version: 1
+
+build_arg_defaults:
+  EE_BASE_IMAGE: 'quay.io/ansible/awx-ee:latest'
+
+additional_build_steps:
+  append: |
+    RUN rpm --import 'https://downloads.1password.com/linux/keys/1password.asc'
+    RUN sh -c 'echo -e "[1password]\nname=1Password Stable Channel\nbaseurl=https://downloads.1password.com/linux/rpm/stable/\$basearch\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=\"https://downloads.1password.com/linux/keys/1password.asc\"" > /etc/yum.repos.d/1password.repo'
+    RUN dnf check-update -y 1password-cli && dnf install -y 1password-cli
+    RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+    RUN dnf install -y zip
+    RUN unzip awscliv2.zip
+    RUN ./aws/install -i /usr/local/aws-cli -b /usr/local/bin
+    RUN dnf install -y onedrive
+    RUN dnf install -y expect
+    RUN dnf install -y jq
